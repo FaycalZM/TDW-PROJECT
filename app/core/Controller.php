@@ -1,7 +1,7 @@
 <?php
 //  this file will contain all the common functions for all controllers, i.e: all other controllers will extend this class
 
-class Controller
+trait Controller
 {
     public function view($name)
     {

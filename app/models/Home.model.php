@@ -1,6 +1,6 @@
 <?php
 
-class User
+class HomeModel
 {
     use Model;
 

@@ -1,10 +1,10 @@
 <?php
 
-class Home
+class News
 {
     use Controller;
 
-    public function show_homepage()
+    public function afficher_news()
     {
         $this->getView('homepage');
         $this->getModel("home");

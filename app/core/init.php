@@ -1,8 +1,5 @@
 <?php
-spl_autoload_register(function ($className) {
-    $fileName = __DIR__ . "/../models/" . ucfirst($className) . ".php";
-    require $fileName;
-});
+
 
 require 'config.php';
 require 'functions.php';

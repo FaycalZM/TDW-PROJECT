@@ -4,6 +4,7 @@
 trait Controller
 {
 
+    // get the right view file based on the provided view name
     public function getView($viewName)
     {
         $filename = __DIR__ . "/../views/" . $viewName . ".view.php";
@@ -13,9 +14,10 @@ trait Controller
             require __DIR__ . '/../views/404.view.php';
         }
     }
+    // get the right model file based on the provided podel name
     public function getModel($modelName)
     {
-        $filename = __DIR__ . "/../models/" . ucfirst($modelName) . ".php";
+        $filename = __DIR__ . "/../models/" . ucfirst($modelName) . ".model.php";
         require $filename;
     }
 

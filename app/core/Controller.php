@@ -3,13 +3,25 @@
 
 trait Controller
 {
-    public function view($name)
+
+    public function getView($viewName)
     {
-        $filename = __DIR__ . "/../views/" . $name . ".view.php";
+        $filename = __DIR__ . "/../views/" . $viewName . ".view.php";
         if (file_exists($filename)) {
             require $filename;
         } else {
             require __DIR__ . '/../views/404.view.php';
         }
+    }
+    public function getModel($modelName)
+    {
+        $filename = __DIR__ . "/../models/" . ucfirst($modelName) . ".php";
+        require $filename;
+    }
+
+
+    public function method_not_found()
+    {
+        echo "Method doesn't exist!";
     }
 }

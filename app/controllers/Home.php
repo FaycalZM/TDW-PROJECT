@@ -4,18 +4,21 @@ class Home
 {
     use Controller;
 
-    public function index($a = '', $b = '', $c = '')
+    public function index($data = [])
     {
-        show($a);
-
-        echo 'This is from the index method';
-        $this->view('home');
+        $this->getView("homepage");
+        $view = new HomepageView();
+        $view->page_head("user.css", "Login");
+        $view->show_menu();
+        $view->show_login_page();
+        $view->show_page_footer();
+        $view->page_foot("");
     }
-    public function add($a = '', $b = '', $c = '')
+    public function add($data = [])
     {
-        show($a);
-
         echo 'This is from the Add method';
-        $this->view('home');
+        $this->getView('homepage');
+        $homepage_view = new HomepageView();
+        $homepage_view->show_filter();
     }
 }

@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 trait View
 {
@@ -23,21 +24,23 @@ trait View
         </head>
 
         <body>
-        <?php
-    }
+            <main class="main-page">
+            <?php
+        }
 
-    public function page_foot($js_file)
-    { ?>
+        public function page_foot($js_file)
+        { ?>
+            </main>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
             <script src="<?= ROOTJS . "/" . $js_file ?>"></script>
         </body>
 
         </html>
     <?php
-    }
+        }
 
-    public function show_page_header()
-    { ?>
+        public function show_page_header()
+        { ?>
         <header>
             <div class="logo">
                 <a href="<?= ROOT ?>">
@@ -48,24 +51,25 @@ trait View
 
             <ul class="social-links">
                 <li>
-                    <a href="#"><img src="<?= ROOTIMG ?>/instagram.png" alt=""></a>
+                    <a href="#"><img src="<?= ROOTIMG ?>/social/instagram.png" alt=""></a>
                 </li>
                 <li>
-                    <a href="#"><img src="<?= ROOTIMG ?>/facebook.png" alt=""></a>
+                    <a href="#"><img src="<?= ROOTIMG ?>/social/facebook.png" alt=""></a>
                 </li>
                 <li>
-                    <a href="#"><img src="<?= ROOTIMG ?>/telegram.png" alt=""></a>
+                    <a href="#"><img src="<?= ROOTIMG ?>/social/telegram.png" alt=""></a>
                 </li>
                 <li>
-                    <a href="#"><img src="<?= ROOTIMG ?>/linkedin.png" alt=""></a>
+                    <a href="#"><img src="<?= ROOTIMG ?>/social/linkedin.png" alt=""></a>
                 </li>
             </ul>
         </header>
     <?php
-    }
+        }
 
-    public function show_menu()
-    { ?>
+        public function show_menu()
+        {
+    ?>
         <ul class="nav-menu">
             <li><a href="<?= ROOT ?>"> Homepage </a></li>
             <li><a href="<?= ROOT ?>/news/afficher_news"> News </a></li>
@@ -74,11 +78,23 @@ trait View
             <li><a href="<?= ROOT ?>/feedback/afficher_recette_of_saison&saison="> Feedback</a></li>
             <li><a href="<?= ROOT ?>/guides/afficher_recette_de_fete&fete="> Guides</a></li>
             <li><a href="<?= ROOT ?>/contact/afficher_contact"> Contact</a></li>
+            <li>
+                <?php
+                if (isset($_SESSION["id"])) { ?>
+            <li><a href="<?= ROOT ?>/user/logout"> Logout </a></li>
+            <li><a href="<?= ROOT ?>/user/show_profile"> Profile </a></li>
+        <?php
+                } else { ?>
+            <li><a href="<?= ROOT ?>/user/show_login_page/"> Login </a></li>
+        <?php
+                } ?>
+
+        </li>
         </ul>
     <?php }
 
-    public function show_page_footer()
-    { ?>
+        public function show_page_footer()
+        { ?>
         <footer>
             <div class="footer-menu">
                 <ul style="list-style: none;">
@@ -96,12 +112,12 @@ trait View
             </div>
         </footer>
     <?php
-    }
+        }
 
 
 
-    public function show_filter()
-    { ?>
+        public function show_filter()
+        { ?>
         <form id="filtres">
             <select aria-label="Default select example">
                 <option selected>Saison</option>
@@ -135,5 +151,5 @@ trait View
             <button type="submit"> Trier </button>
         </form>
 <?php
+        }
     }
-}

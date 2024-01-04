@@ -7,73 +7,77 @@ class UserView
     public function show_login_form($message = "")
     { ?>
         <?php
-        if ($message != "") echo "<div role='alert'>" . $message . "</div>";
+
+        if ($message != "") {
+            $message = decode_message($message);
+            echo "<div>" . $message . "</div>";
+        }
         ?>
-        <div>Login Page</div>
-        <form id="login_form" method="POST" action="<?= ROOT ?>/user/login">
-            <div>
-                <label> Username</label>
-                <input type="email" name="email" id="email" required><br>
-                <label> Password</label>
-                <input type="password" name="password" id="password" required><br>
-                <button type="submit" id="send"> Sign in</button>
-                <a href="<?= ROOT ?>/user/show_signup_page&message=">Signup</a>
-            </div>
-        </form>
-        <script>
-            setTimeout(() => {
-                $("div[role='alert']").hide();
-            }, 3000);
-        </script>
+        <section class="form-container">
+            <h2 style="text-align: center;">Login</h2>
+            <form id="login_form" method="POST" action="<?= ROOT ?>/user/login">
+                <div class="input">
+                    <label> Username</label>
+                    <input type="email" name="email" id="email" required>
+                </div>
+                <div class="input">
+                    <label> Password</label>
+                    <input type="password" name="password" id="password" required>
+                </div>
+                <div class="input btns">
+                    <button class="primary-btn" type="submit" id="signin-btn"> Sign in</button>
+                    <p>you don't have an account? <a class="secondary-btn" href="<?= ROOT ?>/user/show_signup_page">Sign up</a></p>
+                </div>
+            </form>
+        </section>
     <?php
     }
 
     public function show_signup_form($message = "")
     {
-        if ($message != "") echo "<div role='alert'>" . $message . "</div>"; ?>
-        <div>Registration Page</div>
-        <form action="<?= ROOT ?>/user/signup" method="post">
-            <div>
-                <label for="name">Nom</label>
-                <input required type="text" id="name" name="name">
-            </div>
-            <div>
-                <label for="prenom">Prenom</label>
-                <input required type="text" name="prenom" id="prenom">
-            </div>
-            <div>
-                <label for="email">Email</label>
-                <input required type="email" name="email" id="email">
-            </div>
-            <div>
-                <label for="sexe">Sexe</label>
-                <select required id="sexe" name="sexe">
-                    <option selected>Choissir le sexe</option>
-                    <option value="m">Male</option>
-                    <option value="f">Femelle</option>
-                </select>
-            </div>
-            <div>
-                <label for="data_naissance">Date de naissance</label>
-                <input required type="date" name="data_naissance" id="data_naissance">
-            </div>
-            <div>
-                <label for="password">Mot de passe</label>
-                <input required type="password" name="password" id="password">
-            </div>
-            <div>
-                <label for="conf_password">Confirmation de mot de passe</label>
-                <input required type="password" name="conf_password" id="conf_password">
-            </div>
-            <div>
-                <button type="submit">Envoyer </button>
-            </div>
-        </form>
-        <script>
-            setTimeout(() => {
-                $("div[role='alert']").hide();
-            }, 3000);
-        </script>
+        if ($message != "") echo "<div>" . decode_message($message) . "</div>"; ?>
+        <section class="form-container">
+            <h2 style="text-align: center;">Sign up</h2>
+            <form id="signup_form" action="<?= ROOT ?>/user/signup" method="POST">
+                <div class="input">
+                    <label for="firstName">first name</label>
+                    <input required type="text" id="firstName" name="firstName">
+                </div>
+                <div class="input">
+                    <label for="lastName">last name</label>
+                    <input required type="text" name="lastName" id="lastName">
+                </div>
+                <div class="input">
+                    <label for="email">Email</label>
+                    <input required type="email" name="email" id="email">
+                </div>
+                <div class="input">
+                    <label for="sex">Sex</label>
+                    <div style="margin-top: 5px;">
+                        <select required id="sex" name="sex">
+                            <option selected>choose your sex</option>
+                            <option value="M">Male</option>
+                            <option value="F">Femelle</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input">
+                    <label for="birthDate">Date of birth</label>
+                    <input required type="date" name="birthDate" id="birthDate">
+                </div>
+                <div class="input">
+                    <label for="password">Password</label>
+                    <input required type="password" name="password" id="password">
+                </div>
+                <div class="input">
+                    <label for="conf_pwd">Confirm your password</label>
+                    <input required type="password" name="conf_pwd" id="conf_pwd">
+                </div>
+
+                <button id="signup-btn" class="primary-btn" type="submit">Sign up</button>
+            </form>
+        </section>
+
     <?php
     }
 

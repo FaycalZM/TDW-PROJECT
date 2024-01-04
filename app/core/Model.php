@@ -71,13 +71,13 @@ trait Model
     {
         $keys = array_keys($data);
         // remove unallowed data (columns)
-        if (!empty($this->allowedColumns)) {
-            foreach ($keys as $key) {
-                if (in_array($key, $this->allowedColumns)) {
-                    unset($data[$key]);
-                }
-            }
-        }
+        // if (!empty($this->allowedColumns)) {
+        //     foreach ($keys as $key) {
+        //         if (!in_array($key, $this->allowedColumns)) {
+        //             unset($data[$key]);
+        //         }
+        //     }
+        // }
         $columns = "";
         $values = "";
         foreach ($keys as $key) {
@@ -95,13 +95,13 @@ trait Model
     {
         $keys = array_keys($data);
         // remove unallowed data (columns)
-        if (!empty($this->allowedColumns)) {
-            foreach ($keys as $key) {
-                if (in_array($key, $this->allowedColumns)) {
-                    unset($data[$key]);
-                }
-            }
-        }
+        // if (!empty($this->allowedColumns)) {
+        //     foreach ($keys as $key) {
+        //         if (in_array($key, $this->allowedColumns)) {
+        //             unset($data[$key]);
+        //         }
+        //     }
+        // }
         $query = "UPDATE $this->table SET ";
 
         foreach ($keys as $key) {

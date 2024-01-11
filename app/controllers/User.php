@@ -29,6 +29,7 @@ class User
         $view->show_page_footer();
         $view->page_foot("");
     }
+
     public function signup()
     {
         $this->getModel("user");
@@ -59,11 +60,18 @@ class User
             if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
                 $user = $model->get_user();
                 if ($user) {
-                    $_SESSION["id"] = $user["idUser"];
-                    redirect("");
+                    if ($user['is_valid'] == 1) {
+                        // login successful, user is validated 
+                        $_SESSION["id"] = $user["idUser"];
+                        redirect("");
+                    } else {
+                        // must wait for the admin's validation
+                        $message = encode_message("user is not validated");
+                        redirect("/user/show_login_page&message=" . $message);
+                    }
                 } else {
                     $message = encode_message("incorrect email or password");
-                    show($message);
+
                     redirect("/user/show_login_page&message=" . $message);
                 }
             } else {
@@ -77,8 +85,6 @@ class User
 
     public function logout()
     {
-        $this->getModel("user");
-        $model = new UserModel();
         if (isset($_SESSION["id"])) {
             unset($_SESSION["id"]);
         }

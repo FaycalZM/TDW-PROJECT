@@ -9,16 +9,16 @@ trait Controller
     {
         $filename = __DIR__ . "/../views/" . $viewName . ".view.php";
         if (file_exists($filename)) {
-            require $filename;
+            require_once $filename;
         } else {
-            require __DIR__ . '/../views/404.view.php';
+            require_once __DIR__ . '/../views/404.view.php';
         }
     }
     // get the right model file based on the provided podel name
     public function getModel($modelName)
     {
         $filename = __DIR__ . "/../models/" . ucfirst($modelName) . ".model.php";
-        require $filename;
+        require_once $filename;
     }
 
 

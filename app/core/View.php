@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 trait View
 {
@@ -72,12 +71,12 @@ trait View
     ?>
         <ul class="nav-menu">
             <li><a href="<?= ROOT ?>"> Homepage </a></li>
-            <li><a href="<?= ROOT ?>/news/afficher_news"> News </a></li>
-            <li><a href="<?= ROOT ?>/comparator/afficher_form_page"> Comparator</a></li>
-            <li><a href="<?= ROOT ?>/brands/afficher_healthy_recettes"> Brands</a></li>
-            <li><a href="<?= ROOT ?>/feedback/afficher_recette_of_saison&saison="> Feedback</a></li>
-            <li><a href="<?= ROOT ?>/guides/afficher_recette_de_fete&fete="> Guides</a></li>
-            <li><a href="<?= ROOT ?>/contact/afficher_contact"> Contact</a></li>
+            <li><a href="<?= ROOT ?>/news/show_news_page"> News </a></li>
+            <li><a href="<?= ROOT ?>/comparator/show_camparator_page"> Comparator</a></li>
+            <li><a href="<?= ROOT ?>/brands/show_brands_page"> Brands</a></li>
+            <li><a href="<?= ROOT ?>/feedback/show_feedback_page"> Feedback</a></li>
+            <li><a href="<?= ROOT ?>/guides/show_guides_page"> Guides</a></li>
+            <li><a href="<?= ROOT ?>/contact/show_contact_page"> Contact</a></li>
             <li>
                 <?php
                 if (isset($_SESSION["id"])) { ?>
@@ -99,57 +98,18 @@ trait View
             <div class="footer-menu">
                 <ul style="list-style: none;">
                     <li><a href="<?= ROOT ?>"> Homepage </a></li>
-                    <li><a href="<?= ROOT ?>/news/afficher_news"> News </a></li>
-                    <li><a href="<?= ROOT ?>/comparator/afficher_form_page"> Comparator</a></li>
-                    <li><a href="<?= ROOT ?>/brands/afficher_healthy_recettes"> Brands</a></li>
-                    <li><a href="<?= ROOT ?>/feedback/afficher_recette_of_saison&saison="> Feedback</a></li>
-                    <li><a href="<?= ROOT ?>/guides/afficher_recette_de_fete&fete="> Guides</a></li>
-                    <li><a href="<?= ROOT ?>/contact/afficher_contact"> Contact</a></li>
+                    <li><a href="<?= ROOT ?>/news/show_news_page"> News </a></li>
+                    <li><a href="<?= ROOT ?>/comparator/show_comparator_page"> Comparator</a></li>
+                    <li><a href="<?= ROOT ?>/brands/show_brands_oage"> Brands</a></li>
+                    <li><a href="<?= ROOT ?>/feedback/show_feedback_page"> Feedback</a></li>
+                    <li><a href="<?= ROOT ?>/guides/show_guides_page"> Guides</a></li>
+                    <li><a href="<?= ROOT ?>/contact/show_contact_page"> Contact</a></li>
                 </ul>
             </div>
             <div class="copyright">
                 © 2024 Copyright <a href="#">ESI</a>
             </div>
         </footer>
-    <?php
-        }
-
-
-
-        public function show_filter()
-        { ?>
-        <form id="filtres">
-            <select aria-label="Default select example">
-                <option selected>Saison</option>
-                <option value="hiver">Hiver</option>
-                <option value="printemps">Printemps</option>
-                <option value="été">Eté</option>
-                <option value="automne">Automne</option>
-            </select>
-            <input type="number" placeholder=" Temp de préparation" aria-describedby="basic-addon1">
-            <input type="number" placeholder=" Temp de cuisson" aria-describedby="basic-addon1">
-            <input type="number" placeholder=" Temp total" aria-describedby="basic-addon1">
-            <input type="number" placeholder=" Notation" aria-describedby="basic-addon1" min="1" max="10">
-            <input type="number" placeholder=" Nombre de calories" aria-describedby="basic-addon1">
-            <button type="submit"> Filtrer </button>
-        </form>
-
-        <form id="tries">
-            <select aria-label="Default select example">
-                <option selected>Trier par </option>
-                <option value="temp_prepa">Temp de préparation</option>
-                <option value="temp_cuis">Temp de cuisson</option>
-                <option value="temp_total">Temp total</option>
-                <option value="calories">Nombre de calories</option>
-                <option value="notation">Notation</option>
-            </select>
-            <select aria-label="Default select example">
-                <option selected>Par ordre</option>
-                <option value="croissant">Croissant</option>
-                <option value="decroissant">Decroissant</option>
-            </select>
-            <button type="submit"> Trier </button>
-        </form>
 <?php
         }
     }

@@ -4,10 +4,21 @@ trait Model
 {
     use Database;
 
-    protected $limit = 10;
+    protected $limit = 100;
     protected $offset = 0;
-    protected $order_type = "DESC";
+    protected $order_type = "ASC";
     protected $order_column = "id";
+
+
+    public function setOrderColumn($order_column)
+    {
+        $this->order_column = $order_column;
+    }
+    public function setOrderType($order_type)
+    {
+        $this->order_type = $order_type;
+    }
+
 
     // used to get all the rows from a table without any specified condition 
     public function getAll()
@@ -107,7 +118,7 @@ trait Model
         foreach ($keys as $key) {
             $query .= "$key = :$key,";
         }
-
+        $query = substr_replace($query, "", -1);
         $query .= " WHERE $table_id = :$table_id";
         $data[$table_id] = $id;
 
@@ -117,6 +128,7 @@ trait Model
     public function delete($id, $column_id = 'id')
     {
         $query = "DELETE FROM $this->table WHERE $column_id = :$column_id";
+        show($query);
         $data[$column_id] = $id;
         $this->query($query, $data);
         return false;

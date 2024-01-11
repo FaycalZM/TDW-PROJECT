@@ -4,9 +4,9 @@ class News
 {
     use Controller;
 
-    public function afficher_news()
+    public function show_news()
     {
-        $this->getView('homepage');
+        $this->getView('news');
         $this->getModel("home");
 
         echo "This is the news page";

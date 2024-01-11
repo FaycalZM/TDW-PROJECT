@@ -1,0 +1,44 @@
+.menu {
+    width: 100% !important;
+    margin: 0px !important;
+    height: 80px;
+    color: white;
+    background-color: black;
+    display: flex;
+}
+
+.menu div:nth-child(1) {
+    width: 15%;
+    height: 80px;
+}
+
+.menu div:nth-child(1) object {
+    width: 80px;
+    height: 80px;
+    margin-left: 40px;
+}
+
+
+.menu div:nth-child(2) {
+    width: 85%;
+    height: 80px;
+}
+
+.menu div:nth-child(2) ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    height: 80px;
+}
+
+.menu div:nth-child(2) ul li {
+    height: 80px;
+    align-items: center;
+    padding-top: 24px;
+}
+
+.menu div:nth-child(2) ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+}

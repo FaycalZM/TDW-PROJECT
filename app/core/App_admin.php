@@ -1,5 +1,5 @@
 <?php
-class App
+class App_admin
 {
     private $controller = '';
     private $method = '';
@@ -8,7 +8,7 @@ class App
 
     public function splitURL()
     {
-        $URL = $_GET['url'] ?? 'Home/show_homepage';
+        $URL = $_GET['url'] ?? 'Login_admin/show_login_admin';
         $URL = explode('/', trim($URL));
         return $URL;
     }
@@ -38,7 +38,7 @@ class App
                     call_user_func_array([$controller, "method_not_found"], []);
                 }
             } else {
-                $this->method = "show_homepage";
+                $this->method = "show_login_admin";
                 call_user_func_array([$controller, $this->method], $this->parameters);
             }
         } else {

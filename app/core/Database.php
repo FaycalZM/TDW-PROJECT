@@ -29,6 +29,6 @@ trait Database
         }
         $stmt = null;
         $db = null;
-        return false;
+        return [];
     }
 }

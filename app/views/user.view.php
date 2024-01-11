@@ -9,8 +9,7 @@ class UserView
         <?php
 
         if ($message != "") {
-            $message = decode_message($message);
-            echo "<div>" . $message . "</div>";
+            echo "<div class='alert alert-danger mt-5 mb-5 w-50 mx-auto' role='alert'>" . decode_message($message) . "</div>";
         }
         ?>
         <section class="form-container">
@@ -35,7 +34,9 @@ class UserView
 
     public function show_signup_form($message = "")
     {
-        if ($message != "") echo "<div>" . decode_message($message) . "</div>"; ?>
+        if ($message != "") {
+            echo "<div class='alert alert-danger mt-5 mb-5 w-50 mx-auto' role='alert'>" . decode_message($message) . "</div>";
+        } ?>
         <section class="form-container">
             <h2 style="text-align: center;">Sign up</h2>
             <form id="signup_form" action="<?= ROOT ?>/user/signup" method="POST">

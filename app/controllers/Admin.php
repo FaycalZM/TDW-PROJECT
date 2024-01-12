@@ -80,26 +80,128 @@ class Admin
     // news management actions
     public function show_news_management()
     {
-        echo "this is the news management page";
+        $this->verify_admin_login();
+
+        $this->getView('news');
+        $view = new NewsView();
+
+        $this->getModel('news');
+        $model = new NewsModel();
+
+        $news = $model->getAllNews();
+        for ($i = 0; $i < count($news); $i++) {
+            $images = $model->getNewsImages($news[$i]['idNews']);
+            $news[$i]['images'] = $images;
+        }
+
+        $view->page_head(["news_management.css", "menu.css"], 'News management');
+        $view->show_menu();
+        $view->show_news_management($news);
+        $view->page_foot('');
     }
+
+    public function add_news_page()
+    {
+        $this->verify_admin_login();
+
+        $this->getView('news');
+        $view = new NewsView();
+
+        $view->page_head(["news_management.css", "menu.css"], 'Add News');
+        $view->show_menu();
+        $view->add_news_form();
+        $view->page_foot('');
+    }
+
+    public function add_news()
+    {
+        $this->getModel('news');
+        $model = new NewsModel();
+        $model->addNews();
+        redirect('/admin/show_news_management');
+    }
+
+    public function edit_news_page($idNews)
+    {
+        $this->verify_admin_login();
+
+        $this->getView('news');
+        $view = new NewsView();
+        $this->getModel('news');
+        $model = new NewsModel();
+
+        $news = $model->first(['idNews' => $idNews]);
+
+        $view->page_head(["news_management.css", "menu.css"], 'Edit News');
+        $view->show_menu();
+        $view->edit_news_form($news);
+        $view->page_foot('');
+    }
+
+    public function edit_news($idNews)
+    {
+        $this->getModel('news');
+        $model = new NewsModel();
+        $model->editNews($idNews);
+        redirect('/admin/show_news_management');
+    }
+    public function delete_news($idNews)
+    {
+        $this->getModel('news');
+        $model = new NewsModel();
+        $model->deleteNews($idNews);
+        redirect('/admin/show_news_management');
+    }
+
+    public function add_news_image_page($idNews)
+    {
+        $this->verify_admin_login();
+
+        $this->getView('news');
+        $view = new NewsView();
+
+        $view->page_head(["news_management.css", "menu.css"], 'Add News image');
+        $view->show_menu();
+        $view->add_news_image_form($idNews);
+        $view->page_foot('');
+    }
+
+    public function add_news_image($idNews)
+    {
+        $this->getModel('news');
+        $model = new NewsModel();
+        $model->addNewsImage($idNews);
+        redirect('/admin/show_news_management');
+    }
+    public function delete_news_image($idImageNews)
+    {
+        $this->getModel('news');
+        $model = new NewsModel();
+        $model->deleteNewsImage($idImageNews);
+        redirect('/admin/show_news_management');
+    }
+
     // vehicles management actions
     public function show_vehicles_management()
     {
         $this->verify_admin_login();
 
-        $this->getView('admin');
-        $view = new Admin_page_view();
+        $this->getView('vehicle');
+        $view = new VehicleView();
         $this->getModel('admin');
-        $model = new AdminModel();
-        $brands = $model->getAllBrands();
-        $vehicles = $model->getAllVehicles();
+        $this->getModel('vehicle');
+        $this->getModel('brand');
+        $adminModel = new AdminModel();
+        $vehicleModel = new VehicleModel();
+        $brandModel = new BrandModel();
+        $brands = $brandModel->getAllBrands();
+        $vehicles = $vehicleModel->getAllVehicles();
         for ($i = 0; $i < count($vehicles); $i++) {
-            $vehicleInfos = $model->getVehicleInfos($vehicles[$i]['idVehicle']);
+            $vehicleInfos = $adminModel->getVehicleInfos($vehicles[$i]['idVehicle']);
             $vehicles[$i]['version'] = $vehicleInfos['version'];
             $vehicles[$i]['modele'] = $vehicleInfos['modele'];
             $vehicles[$i]['marque'] = $vehicleInfos['marque'];
         }
-
 
         $view->page_head(["vehicles_management.css", "menu.css"], 'Vehicles management');
         $view->show_menu();
@@ -112,10 +214,8 @@ class Admin
     {
         $this->verify_admin_login();
 
-        $this->getView('admin');
-        $view = new Admin_page_view();
-        $this->getModel('admin');
-        $model = new AdminModel();
+        $this->getView('vehicle');
+        $view = new VehicleView();
 
         $view->page_head(["vehicles_management.css", "menu.css"], 'Add Vehicle');
         $view->show_menu();
@@ -125,8 +225,8 @@ class Admin
 
     public function add_vehicle()
     {
-        $this->getModel('admin');
-        $model = new AdminModel();
+        $this->getModel('vehicle');
+        $model = new VehicleModel();
         $model->addVehicle();
         redirect('/admin/show_vehicles_management');
     }
@@ -135,10 +235,10 @@ class Admin
     {
         $this->verify_admin_login();
 
-        $this->getView('admin');
-        $view = new Admin_page_view();
-        $this->getModel('admin');
-        $model = new AdminModel('vehicle');
+        $this->getView('vehicle');
+        $view = new VehicleView();
+        $this->getModel('vehicle');
+        $model = new VehicleModel();
         $vehicle = $model->first(['idVehicle' => $idVehicle]);
         $view->page_head(["vehicles_management.css", "menu.css"], 'Edit Vehicle');
         $view->show_menu();
@@ -148,15 +248,15 @@ class Admin
 
     public function edit_vehicle($idVehicle)
     {
-        $this->getModel('admin');
-        $model = new AdminModel();
+        $this->getModel('vehicle');
+        $model = new VehicleModel();
         $model->editVehicle($idVehicle);
         redirect('/admin/show_vehicles_management');
     }
     public function delete_vehicle($idVehicle)
     {
-        $this->getModel('admin');
-        $model = new AdminModel();
+        $this->getModel('vehicle');
+        $model = new VehicleModel();
         $model->deleteVehicle($idVehicle);
         redirect('/admin/show_vehicles_management');
     }
@@ -165,10 +265,8 @@ class Admin
     {
         $this->verify_admin_login();
 
-        $this->getView('admin');
-        $view = new Admin_page_view();
-        $this->getModel('admin');
-        $model = new AdminModel();
+        $this->getView('brand');
+        $view = new BrandView();
 
         $view->page_head(["vehicles_management.css", "menu.css"], 'Add brand');
         $view->show_menu();
@@ -178,8 +276,8 @@ class Admin
 
     public function add_brand()
     {
-        $this->getModel('admin');
-        $model = new AdminModel();
+        $this->getModel('brand');
+        $model = new BrandModel();
         $model->addBrand();
         redirect('/admin/show_vehicles_management');
     }
@@ -188,10 +286,10 @@ class Admin
     {
         $this->verify_admin_login();
 
-        $this->getView('admin');
-        $view = new Admin_page_view();
-        $this->getModel('admin');
-        $model = new AdminModel('marque');
+        $this->getView('brand');
+        $view = new BrandView();
+        $this->getModel('brand');
+        $model = new BrandModel();
         $brand = $model->first(['idMarque' => $idMarque]);
         $view->page_head(["vehicles_management.css", "menu.css"], 'Edit Brand');
         $view->show_menu();
@@ -201,18 +299,53 @@ class Admin
 
     public function edit_brand($idMarque)
     {
-        $this->getModel('admin');
-        $model = new AdminModel();
+        $this->getModel('brand');
+        $model = new BrandModel();
         $model->editBrand($idMarque);
         redirect('/admin/show_vehicles_management');
     }
     public function delete_brand($idMarque)
     {
-        $this->getModel('admin');
-        $model = new AdminModel();
+        $this->getModel('brand');
+        $model = new BrandModel();
         $model->deleteBrand($idMarque);
         redirect('/admin/show_vehicles_management');
     }
+
+    public function show_vehicle_details($idVehicle)
+    {
+        $this->verify_admin_login();
+
+        $this->getView('vehicle');
+        $view = new VehicleView();
+        $this->getModel('vehicle');
+        $model = new VehicleModel();
+        $vehicle = $model->getVehicle($idVehicle);
+        $images = $model->getVehicleImages($idVehicle);
+
+        $view->page_head(["vehicles_management.css", "menu.css", "vehicle_details.css"], 'Vehicles management');
+        $view->show_menu();
+        $view->vehicle_details_page($vehicle, $images);
+        $view->page_foot('');
+    }
+    public function show_brand_details($idMarque)
+    {
+        $this->verify_admin_login();
+
+        $this->getView('brand');
+        $view = new BrandView();
+        $this->getModel('brand');
+        $model = new BrandModel();
+        $brand = $model->getBrand($idMarque);
+        $images = $model->getBrandImages($idMarque);
+
+        $view->page_head(["vehicles_management.css", "menu.css", "vehicle_details.css"], 'Vehicles management');
+        $view->show_menu();
+
+        $view->brand_details_page($brand, $images);
+        $view->page_foot('');
+    }
+
 
 
     // feedback management actions

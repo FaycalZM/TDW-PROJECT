@@ -12,7 +12,7 @@ class HomepageView
                 <?php foreach ($diaporama as $item) : ?>
                     <div class="slide">
                         <img src="<?= ROOTIMG . "/brands/" . $item ?>" alt="news" width="100%" height="400px">
-                        <a href="#"><button> Voir plus </button></a>
+                        <a href="#"><button> Read More </button></a>
                     </div>
                 <?php endforeach; ?>
             </div>

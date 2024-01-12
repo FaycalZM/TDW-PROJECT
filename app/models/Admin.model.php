@@ -107,18 +107,6 @@ class AdminModel
     }
 
     // ----- Vehicles management -----
-    public function getAllBrands()
-    {
-        $this->table = 'marque';
-        $this->order_column = 'idMarque';
-        return $this->getAll();
-    }
-    public function getAllVehicles()
-    {
-        $this->table = 'vehicle';
-        $this->order_column = 'idVehicle';
-        return $this->getAll();
-    }
 
     public function getVehicleInfos($idVehicle)
     {
@@ -136,40 +124,5 @@ class AdminModel
             'marque' => $marque,
         ];
         return $infos;
-    }
-
-    public function addVehicle()
-    {
-        $this->table = 'vehicle';
-        $data = $_POST;
-        $this->insert($data);
-    }
-    public function editVehicle($idVehicle)
-    {
-        $this->table = 'vehicle';
-        $data = $_POST;
-        $this->update($idVehicle, $data, 'idVehicle');
-    }
-    public function deleteVehicle($idVehicle)
-    {
-        $this->table = 'vehicle';
-        $this->delete($idVehicle, 'idVehicle');
-    }
-    public function addBrand()
-    {
-        $this->table = 'marque';
-        $data = $_POST;
-        $this->insert($data);
-    }
-    public function editBrand($idMarque)
-    {
-        $this->table = 'marque';
-        $data = $_POST;
-        $this->update($idMarque, $data, 'idMarque');
-    }
-    public function deleteBrand($idMarque)
-    {
-        $this->table = 'marque';
-        $this->delete($idMarque, 'idMarque');
     }
 }

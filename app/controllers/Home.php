@@ -10,9 +10,9 @@ class Home
         $this->getModel("home");
 
         $view = new HomepageView();
-        $model = new HomeModel();
+
         $view->page_head(["view.css"], "Homepage");
-        // $diaporama = $model->getDiaporama();
+
         $view->show_page_header();
         $slides = ["audi.png", "mercedes.png", "toyota.png", "bmw.png"];
         $view->show_diaporama($slides);

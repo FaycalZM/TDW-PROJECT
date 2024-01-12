@@ -8,14 +8,14 @@ class Home
     {
         $this->getView('homepage');
         $this->getModel("home");
-
         $view = new HomepageView();
+        $homeModel = new HomeModel();
+
+        $diaporama = $homeModel->getDiaporama();
 
         $view->page_head(["view.css"], "Homepage");
-
         $view->show_page_header();
-        $slides = ["audi.png", "mercedes.png", "toyota.png", "bmw.png"];
-        $view->show_diaporama($slides);
+        $view->show_diaporama($diaporama);
         $view->show_menu();
         $view->show_page_footer();
         $view->page_foot("view.js");

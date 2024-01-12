@@ -11,8 +11,8 @@ class HomepageView
             <div class="diaporama">
                 <?php foreach ($diaporama as $item) : ?>
                     <div class="slide">
-                        <img src="<?= ROOTIMG . "/brands/" . $item ?>" alt="news" width="100%" height="400px">
-                        <a href="#"><button> Read More </button></a>
+                        <img src="<?= ROOTIMG  ?><?= $item['image'] ?>" alt="diaporama image" width="100%" height="400px">
+                        <a href="<?= $item['URL'] ?>"><button> Read More </button></a>
                     </div>
                 <?php endforeach; ?>
             </div>

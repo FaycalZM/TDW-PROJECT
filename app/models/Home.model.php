@@ -4,6 +4,12 @@ class HomeModel
 {
     use Model;
 
-    protected $table = 'user';
-    protected $allowedColumns = [];
+    protected $table = '';
+
+    public function getDiaporama()
+    {
+        $this->table = 'diaporama';
+        $this->order_column = 'idDiaporama';
+        return $this->getAll();
+    }
 }

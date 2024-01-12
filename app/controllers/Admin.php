@@ -363,11 +363,12 @@ class Admin
         $this->getView('settings');
         $view = new SettingsView();
 
-        $view->page_head(["admin_page.css"], "Settings page");
+        $view->page_head(["admin_page.css", 'menu.css'], "Settings page");
+        $view->show_menu();
         $view->show_settings_page();
         $view->page_foot('');
     }
-
+    // contact management
     public function show_contact_management()
     {
         $this->verify_admin_login();
@@ -438,5 +439,150 @@ class Admin
         $model = new AdminModel('contact');
         $model->deleteContact($idContact);
         redirect('/admin/show_contact_management');
+    }
+    // guides management 
+    public function show_guides_management()
+    {
+        $this->verify_admin_login();
+
+        $this->getView('settings');
+        $view = new SettingsView();
+
+        $this->getModel('admin');
+        $model = new AdminModel();
+
+        $guides = $model->getAllGuides();
+
+        $view->page_head(["admin_page.css", "menu.css"], 'Guides management');
+        $view->show_menu();
+        $view->show_guides_management($guides);
+        $view->page_foot('');
+    }
+
+    public function add_guide_page()
+    {
+        $this->verify_admin_login();
+
+        $this->getView('settings');
+        $view = new SettingsView();
+
+        $view->page_head(["admin_page.css", "menu.css"], 'Add guide');
+        $view->show_menu();
+        $view->add_guide_form();
+        $view->page_foot('');
+    }
+
+    public function add_guide()
+    {
+        $this->verify_admin_login();
+        $this->getModel('admin');
+        $model = new AdminModel('guidesachats');
+        $model->addGuide();
+        redirect('/admin/show_guides_management');
+    }
+
+    public function edit_guide_page($idGuide)
+    {
+        $this->verify_admin_login();
+
+        $this->getView('settings');
+        $view = new SettingsView();
+        $this->getModel('admin');
+        $model = new AdminModel('guidesachats');
+        $guide = $model->first(['idGuide' => $idGuide]);
+        $view->page_head(["admin_page.css", "menu.css"], 'Edit guide');
+        $view->show_menu();
+        $view->edit_guide_form($guide);
+        $view->page_foot('');
+    }
+    public function edit_guide($idGuide)
+    {
+        $this->verify_admin_login();
+        $this->getModel('admin');
+        $model = new AdminModel('guidesachats');
+        $model->editGuide($idGuide);
+        redirect('/admin/show_guides_management');
+    }
+
+    public function delete_guide($idGuide)
+    {
+        $this->verify_admin_login();
+        $this->getModel('admin');
+        $model = new AdminModel('guidesachats');
+        $model->deleteGuide($idGuide);
+        redirect('/admin/show_guides_management');
+    }
+    // Diaporama management
+    // guides management 
+    public function show_diaporama_management()
+    {
+        $this->verify_admin_login();
+
+        $this->getView('settings');
+        $view = new SettingsView();
+
+        $this->getModel('admin');
+        $model = new AdminModel();
+
+        $diaporama = $model->getAllDiaporama();
+
+        $view->page_head(["admin_page.css", "menu.css"], 'Diaporama management');
+        $view->show_menu();
+        $view->show_diaporama_management($diaporama);
+        $view->page_foot('');
+    }
+
+    public function add_diaporama_page()
+    {
+        $this->verify_admin_login();
+
+        $this->getView('settings');
+        $view = new SettingsView();
+
+        $view->page_head(["admin_page.css", "menu.css"], 'Add diaporama');
+        $view->show_menu();
+        $view->add_diaporama_form();
+        $view->page_foot('');
+    }
+
+    public function add_diaporama()
+    {
+        $this->verify_admin_login();
+        $this->getModel('admin');
+        $model = new AdminModel('diaporama');
+        $model->addDiaporama();
+        redirect('/admin/show_diaporama_management');
+    }
+
+    public function edit_diaporama_page($idDiaporama)
+    {
+        $this->verify_admin_login();
+
+        $this->getView('settings');
+        $view = new SettingsView();
+        $this->getModel('admin');
+        $model = new AdminModel('diaporama');
+        $diaporama = $model->first(['idDiaporama' => $idDiaporama]);
+        $view->page_head(["admin_page.css", "menu.css"], 'Edit diaporama');
+        $view->show_menu();
+        $view->edit_diaporama_form($diaporama);
+        $view->page_foot('');
+    }
+    public function edit_diaporama($idDiaporama)
+    {
+        $this->verify_admin_login();
+        $this->getModel('admin');
+        $model = new AdminModel('diaporama');
+        $model->editDiaporama($idDiaporama);
+        redirect('/admin/show_diaporama_management');
+    }
+
+    public function delete_diaporama($idDiaporama)
+    {
+        $this->verify_admin_login();
+        $this->getModel('admin');
+        $model = new AdminModel('diaporama');
+        $model->deleteDiaporama($idDiaporama);
+        redirect('/admin/show_diaporama_management');
     }
 }

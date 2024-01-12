@@ -127,6 +127,7 @@ class AdminModel
     }
 
     // ----- Settings management -----
+    // Contact infos management
     public function getAllContacts()
     {
         $this->table = 'contact';
@@ -148,5 +149,52 @@ class AdminModel
     public function deleteContact($idContact)
     {
         $this->delete($idContact, 'idContact');
+    }
+    // Guides d'achat management
+    public function getAllGuides()
+    {
+        $this->table = 'guidesachats';
+        $this->order_column = 'idGuide';
+        return $this->getAll();
+    }
+
+    public function addGuide()
+    {
+        $data = $_POST;
+        $this->insert($data);
+    }
+
+    public function editGuide($idGuide)
+    {
+        $data = $_POST;
+        $this->update($idGuide, $data, 'idGuide');
+    }
+    public function deleteGuide($idGuide)
+    {
+        $this->delete($idGuide, 'idGuide');
+    }
+    // Diaporama management
+    public function getAllDiaporama()
+    {
+        $this->table = 'diaporama';
+        $this->order_column = 'idDiaporama';
+        return $this->getAll();
+    }
+
+    public function addDiaporama()
+    {
+        $data = $_POST;
+        $this->insert($data);
+    }
+
+    public function editDiaporama($idDiaporama)
+    {
+        $data = $_POST;
+        $this->update($idDiaporama, $data, 'idDiaporama');
+    }
+
+    public function deleteDiaporama($idDiaporama)
+    {
+        $this->delete($idDiaporama, 'idDiaporama');
     }
 }

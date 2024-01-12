@@ -299,6 +299,7 @@ class Admin
 
     public function edit_brand($idMarque)
     {
+        $this->verify_admin_login();
         $this->getModel('brand');
         $model = new BrandModel();
         $model->editBrand($idMarque);
@@ -306,6 +307,7 @@ class Admin
     }
     public function delete_brand($idMarque)
     {
+        $this->verify_admin_login();
         $this->getModel('brand');
         $model = new BrandModel();
         $model->deleteBrand($idMarque);
@@ -356,6 +358,85 @@ class Admin
     // website settings management
     public function show_settings()
     {
-        echo "this is the settings management page";
+        $this->verify_admin_login();
+
+        $this->getView('settings');
+        $view = new SettingsView();
+
+        $view->page_head(["admin_page.css"], "Settings page");
+        $view->show_settings_page();
+        $view->page_foot('');
+    }
+
+    public function show_contact_management()
+    {
+        $this->verify_admin_login();
+
+        $this->getView('settings');
+        $view = new SettingsView();
+
+        $this->getModel('admin');
+        $model = new AdminModel();
+
+        $contacts = $model->getAllContacts();
+
+        $view->page_head(["admin_page.css", "menu.css"], 'Contact management');
+        $view->show_menu();
+        $view->show_contact_management($contacts);
+        $view->page_foot('');
+    }
+
+    public function add_contact_page()
+    {
+        $this->verify_admin_login();
+
+        $this->getView('settings');
+        $view = new SettingsView();
+
+        $view->page_head(["admin_page.css", "menu.css"], 'Add contact');
+        $view->show_menu();
+        $view->add_contact_form();
+        $view->page_foot('');
+    }
+
+    public function add_contact()
+    {
+        $this->verify_admin_login();
+        $this->getModel('admin');
+        $model = new AdminModel('contact');
+        $model->addContact();
+        redirect('/admin/show_contact_management');
+    }
+
+    public function edit_contact_page($idContact)
+    {
+        $this->verify_admin_login();
+
+        $this->getView('settings');
+        $view = new SettingsView();
+        $this->getModel('admin');
+        $model = new AdminModel('contact');
+        $contact = $model->first(['idContact' => $idContact]);
+        $view->page_head(["admin_page.css", "menu.css"], 'Edit contact');
+        $view->show_menu();
+        $view->edit_contact_form($contact);
+        $view->page_foot('');
+    }
+    public function edit_contact($idContact)
+    {
+        $this->verify_admin_login();
+        $this->getModel('admin');
+        $model = new AdminModel('contact');
+        $model->editContact($idContact);
+        redirect('/admin/show_contact_management');
+    }
+
+    public function delete_contact($idContact)
+    {
+        $this->verify_admin_login();
+        $this->getModel('admin');
+        $model = new AdminModel('contact');
+        $model->deleteContact($idContact);
+        redirect('/admin/show_contact_management');
     }
 }

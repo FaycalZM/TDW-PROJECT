@@ -6,7 +6,7 @@ class NewsView
     public function show_news_management($news)
     { ?>
         <!-- News table -->
-        <div class="container mt-5">
+        <div class=" mt-5" style="width: 90%; margin: auto;">
             <h2>News</h2>
             <table class="table table-bordered  align-middle full-width-table">
                 <thead>
@@ -38,7 +38,7 @@ class NewsView
                             </td>
                             <td><a href="<?= $new['newsSource'] ?>" target="_blank" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
                                     Read More</a></td>
-                            <td style="display: flex; flex-direction: column; gap: .5rem;">
+                            <td style="display: flex; flex-direction: column; gap: .5rem; ">
                                 <a href="<?= ROOT ?>/admin/edit_news_page&idNews=<?= $new['idNews'] ?>" class="btn btn-primary btn-sm">Edit</a>
                                 <a href="<?= ROOT ?>/admin/add_news_image_page&idNews=<?= $new['idNews'] ?>" class="btn btn-secondary btn-sm">Add image</a>
                                 <a href="<?= ROOT ?>/admin/delete_news&idNews=<?= $new['idNews'] ?>" class="btn btn-danger btn-sm">Delete</a>

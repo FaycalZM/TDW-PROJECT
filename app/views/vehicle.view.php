@@ -264,8 +264,9 @@ class VehicleView
                     <h5>No available images</h5>
                 <?php }
                 ?>
-
             </div>
+
+
 
         </div>
 

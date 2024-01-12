@@ -125,4 +125,28 @@ class AdminModel
         ];
         return $infos;
     }
+
+    // ----- Settings management -----
+    public function getAllContacts()
+    {
+        $this->table = 'contact';
+        $this->order_column = 'idContact';
+        return $this->getAll();
+    }
+
+    public function addContact()
+    {
+        $data = $_POST;
+        $this->insert($data);
+    }
+
+    public function editContact($idContact)
+    {
+        $data = $_POST;
+        $this->update($idContact, $data, 'idContact');
+    }
+    public function deleteContact($idContact)
+    {
+        $this->delete($idContact, 'idContact');
+    }
 }

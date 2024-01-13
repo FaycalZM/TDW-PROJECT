@@ -75,7 +75,7 @@ class BrandModel
     public function getBrandMostAppreciatedFeedback($idMarque)
     {
         $this->table = 'avismarque';
-        $brandFeedback = $this->where(['idMarque' => $idMarque]);
+        $brandFeedback = $this->where(['idMarque' => $idMarque, 'is_valid' => 1]);
         usort($brandFeedback, function ($feedback1, $feedback2) {
             return $feedback2['appreciation'] <=> $feedback1['appreciation'];
         });
@@ -86,6 +86,13 @@ class BrandModel
     {
         $this->table = 'avismarque';
         $brandFeedback = $this->where(['idMarque' => $idMarque]);
+        return $brandFeedback;
+    }
+
+    public function getAllValidBrandFeedback($idMarque)
+    {
+        $this->table = 'avismarque';
+        $brandFeedback = $this->where(['idMarque' => $idMarque, 'is_valid' => 1]);
         return $brandFeedback;
     }
 

@@ -41,6 +41,27 @@ class HomepageView
             </div>
         </div>
     <?php }
+
+    public function show_feedback_brands_logos($brands)
+    { ?>
+        <div class="container mt-5">
+            <div class="row">
+                <?php
+                foreach ($brands as $brand) { ?>
+                    <div class="col-md-4 mb-4">
+                        <a href="<?= ROOT ?>/feedback/show_brand_feedback&idMarque=<?= $brand['idMarque'] ?>" class="brand-logo-link">
+                            <img src="<?= ROOTIMG ?><?= $brand['logo'] ?>" alt="Brand Logo" class="img-fluid">
+                        </a>
+                        <h3 class="brand-name text-center mt-3"><?= $brand['nameMarque'] ?></h3>
+                    </div>
+                <?php }
+                ?>
+            </div>
+        </div>
+    <?php }
+
+    // Brand details page
+
     public function brand_details_page($brand, $images, $vehicles, $feedbacks)
     { ?>
         <div class="container details-container mt-5">
@@ -184,6 +205,109 @@ class HomepageView
         </div>
     <?php }
 
+    // brand feedback page
+
+    public function brand_feedback_page($brand, $image, $vehicles, $feedbacks)
+    { ?>
+        <div class="container details-container mt-5">
+            <!-- Details Section -->
+            <h2>Brand Details</h2>
+            <div class="details-section mt-2">
+                <div class="details-card">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>Name:</strong>
+                        </div>
+                        <div class="col-md-8">
+                            <?= $brand['nameMarque'] ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>Website:</strong>
+                        </div>
+                        <div class="col-md-8">
+                            <a href="<?= $brand['website'] ?>" target="_blank" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+                                <?= $brand['nameMarque'] ?> Official Website</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>Headquarters:</strong>
+                        </div>
+                        <div class="col-md-8">
+                            <?= $brand['headquarters'] ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>CEO:</strong>
+                        </div>
+                        <div class="col-md-8">
+                            <?= $brand['CEO'] ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>Founding Year:</strong>
+                        </div>
+                        <div class="col-md-8">
+                            <?= $brand['founding_year'] ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>Note:</strong>
+                        </div>
+                        <div class="col-md-8">
+                            <?= $brand['note'] ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Image Section  -->
+            <div class="images-section">
+                <img src="<?= ROOTIMG . $image['imageURL'] ?>" alt="Vehicle Image" class="vehicle-image">
+            </div>
+
+            <!-- main brand vehicles -->
+            <div class="container mt-5">
+                <h2 class="mb-4 text-center"> Main <?= $brand['nameMarque'] ?> vehicles </h2>
+                <div class="row">
+                    <?php
+                    foreach (array_slice($vehicles, 0, 3) as $vehicle) { ?>
+                        <div class="col-md-4 mb-4">
+                            <a href="<?= ROOT ?>/feedback/show_vehicle_feedback&idVehicle=<?= $vehicle['idVehicle'] ?>" class="vehicle-link">
+                                <img src="<?= ROOTIMG ?><?= $vehicle['image'] ?>" alt="Brand Logo" class="img-fluid">
+                            </a>
+                            <h3 class="brand-name text-center mt-3"><?= $vehicle['name'] ?></h3>
+                        </div>
+                    <?php }
+                    ?>
+                </div>
+            </div>
+            <!-- all brand vehicles -->
+            <h2 class="mb-3"> All <?= $brand['nameMarque'] ?> vehicles </h2>
+            <form method="POST" action="<?= ROOT ?>/feedback/vehicle_feedback">
+                <select name="idVehicle" class="form-select" aria-label="Default select example">
+                    <option selected>select vehicle</option>
+                    <?php
+                    foreach ($vehicles as $vehicle) { ?>
+                        <option value="<?= $vehicle['idVehicle'] ?>"><?= $vehicle['name'] ?></option>
+                    <?php  }
+                    ?>
+                </select>
+                <button type="submit" class="btn btn-primary mt-4">Show Vehicle Feedback</button>
+            </form>
+
+            <?php
+            $this->feedback_section($feedbacks, '/feedback/like_brand_comment&idAvisMarque=', 'idAvisMarque', 'idMarque');
+            ?>
+        </div>
+    <?php }
+
+
+    // vehicle details page
     public function vehicle_details_page($vehicle, $images, $feedbacks)
     { ?>
         <div class="container details-container mt-5">
@@ -321,14 +445,37 @@ class HomepageView
             <?php
             }
             $this->feedback_section($feedbacks, '/feedback/like_vehicle_comment&idAvisVehicle=', 'idAvisVehicle', 'idVehicle');
+            if ($feedbacks) { ?>
+                <a href="<?= ROOT ?>/feedback/show_vehicle_feedback&idVehicle=<?= $vehicle['idVehicle'] ?>" class="btn btn-primary">Show all comments</a>
+            <?php }
+            ?>
 
 
+        </div>
 
+    <?php }
+
+    // vehicle feedback page
+    public function vehicle_feedback_page($vehicle, $image, $feedbacks)
+    { ?>
+        <div class="container details-container mt-5">
+
+            <!-- Vehicle infos -->
+            <h2><?= $vehicle['name'] ?> </h2>
+            <!-- Image Section  -->
+            <div class="images-section">
+                <img src="<?= ROOTIMG . $image ?>" alt="Vehicle Image" class="vehicle-image">
+            </div>
+            <a href="<?= ROOT ?>/brands/show_vehicle_details&idVehicle=<?= $vehicle['idVehicle'] ?>" class="btn btn-primary">Show Details</a>
+
+            <?php
+            $this->feedback_section($feedbacks, '/feedback/like_vehicle_comment&idAvisVehicle=', 'idAvisVehicle', 'idVehicle');
             ?>
 
         </div>
 
     <?php }
+
 
     public function feedback_section($feedbacks, $path, $feedbackId, $id)
     { ?>

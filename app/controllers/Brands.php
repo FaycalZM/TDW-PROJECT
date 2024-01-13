@@ -11,6 +11,7 @@ class Brands
         $view = new HomepageView();
         $brandsModel = new BrandModel();
 
+        // get all brands with their logos
         $brands = $brandsModel->getAllBrands();
         for ($i = 0; $i < count($brands); $i++) {
             $brandImages = $brandsModel->getBrandImages($brands[$i]['idMarque']);
@@ -52,7 +53,7 @@ class Brands
             $brandVehicles[$i]['image'] = $vehicleImages[0]['imageURL'] ?? 'vehicles/default_vehicle.webp';
         }
         // get brand feedback
-        $brandFeedback = $brandModel->getBrandMostAppreciatedFeedback($idMarque);
+        $brandFeedback = $brandModel->getAllValidBrandFeedback($idMarque);
         for ($i = 0; $i < count($brandFeedback); $i++) {
             $user = $userModel->getUserById($brandFeedback[$i]['idUser']);
             $brandFeedback[$i]['user'] = $user;

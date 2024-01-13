@@ -88,7 +88,7 @@ class VehicleModel
     public function getVehicleMostAppreciatedFeedback($idVehicle)
     {
         $this->table = 'avisvehicle';
-        $vehicleFeedback = $this->where(['idVehicle' => $idVehicle]);
+        $vehicleFeedback = $this->where(['idVehicle' => $idVehicle, 'is_valid' => 1]);
         usort($vehicleFeedback, function ($feedback1, $feedback2) {
             return $feedback2['appreciation'] <=> $feedback1['appreciation'];
         });
@@ -99,6 +99,12 @@ class VehicleModel
     {
         $this->table = 'avisvehicle';
         $vehicleFeedback = $this->where(['idVehicle' => $idVehicle]);
+        return $vehicleFeedback;
+    }
+    public function getAllValidVehicleFeedback($idVehicle)
+    {
+        $this->table = 'avisvehicle';
+        $vehicleFeedback = $this->where(['idVehicle' => $idVehicle, 'is_valid' => 1]);
         return $vehicleFeedback;
     }
 

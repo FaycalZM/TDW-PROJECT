@@ -265,9 +265,6 @@ class VehicleView
                 <?php }
                 ?>
             </div>
-
-
-
         </div>
 
 <?php }

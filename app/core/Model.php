@@ -81,14 +81,6 @@ trait Model
     public function insert($data)
     {
         $keys = array_keys($data);
-        // remove unallowed data (columns)
-        // if (!empty($this->allowedColumns)) {
-        //     foreach ($keys as $key) {
-        //         if (!in_array($key, $this->allowedColumns)) {
-        //             unset($data[$key]);
-        //         }
-        //     }
-        // }
         $columns = "";
         $values = "";
         foreach ($keys as $key) {
@@ -105,14 +97,6 @@ trait Model
     public function update($id, $data, $table_id = 'id')
     {
         $keys = array_keys($data);
-        // remove unallowed data (columns)
-        // if (!empty($this->allowedColumns)) {
-        //     foreach ($keys as $key) {
-        //         if (in_array($key, $this->allowedColumns)) {
-        //             unset($data[$key]);
-        //         }
-        //     }
-        // }
         $query = "UPDATE $this->table SET ";
 
         foreach ($keys as $key) {

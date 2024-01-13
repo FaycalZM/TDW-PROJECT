@@ -94,7 +94,7 @@ trait View
 
         public function show_page_footer()
         { ?>
-        <footer>
+        <footer style="width: 100%;">
             <div class="footer-menu">
                 <ul style="list-style: none;">
                     <li><a href="<?= ROOT ?>"> Homepage </a></li>

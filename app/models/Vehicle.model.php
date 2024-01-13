@@ -14,6 +14,7 @@ class VehicleModel
 
     public function getVehicle($idVehicle)
     {
+        $this->table = 'vehicle';
         return $this->first(['idVehicle' => $idVehicle]);
     }
 
@@ -54,5 +55,65 @@ class VehicleModel
         $this->table = 'imagevehicle';
         $results = $this->where(['idVehicle' => $idVehicle]);
         return $results;
+    }
+
+    public function getVehicleNote($idVehicle)
+    {
+        $this->table = "vehicle";
+        $vehicle = $this->getVehicle($idVehicle);
+        return $vehicle['note'];
+    }
+
+    public function rateVehicle($idVehicle, $idUser)
+    {
+        $this->table = 'notevehicle';
+        $vehicleNote = floatval($this->getVehicleNote($idVehicle));
+        if ($vehicleNote) {
+            // the vehicle is rated
+            $vehicleNotes = $this->where(['idVehicle' => $idVehicle]);
+            $notesNum = count($vehicleNotes);
+            $userNote = floatval($_POST['note_value']);
+            $newNote = ($vehicleNote * $notesNum + $userNote) / ($notesNum + 1);
+        } else {
+            // the vehicle is not rated
+            $userNote = floatval($_POST['note_value']);
+            $newNote = $userNote;
+        }
+        $this->table = 'notevehicle';
+        $this->insert(['idUser' => $idUser, 'idVehicle' => $idVehicle, 'note_value' => $userNote]);
+        $this->table = 'vehicle';
+        $this->update($idVehicle, ['note' => $newNote], 'idVehicle');
+    }
+
+    public function getVehicleMostAppreciatedFeedback($idVehicle)
+    {
+        $this->table = 'avisvehicle';
+        $vehicleFeedback = $this->where(['idVehicle' => $idVehicle]);
+        usort($vehicleFeedback, function ($feedback1, $feedback2) {
+            return $feedback2['appreciation'] <=> $feedback1['appreciation'];
+        });
+        return array_slice($vehicleFeedback, 0, 3);
+    }
+
+    public function getAllVehicleFeedback($idVehicle)
+    {
+        $this->table = 'avisvehicle';
+        $vehicleFeedback = $this->where(['idVehicle' => $idVehicle]);
+        return $vehicleFeedback;
+    }
+
+    public function feedbackVehicle($idVehicle, $idUser)
+    {
+        $this->table = 'avisvehicle';
+        $userComment = $_POST['avis_text'];
+        $this->insert(['idUser' => $idUser, 'idVehicle' => $idVehicle, 'avis_text' => $userComment]);
+    }
+
+    public function likeVehicleComment($idAvisVehicle)
+    {
+        $this->table = 'avisvehicle';
+        $comment = $this->first(['idAvisVehicle' => $idAvisVehicle]);
+        $likes = $comment['appreciation'];
+        $this->update($idAvisVehicle, ['appreciation' => $likes + 1], 'idAvisVehicle');
     }
 }

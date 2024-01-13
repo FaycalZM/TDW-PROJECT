@@ -22,3 +22,14 @@ function decode_message($message)
 {
     return strtr($message, "_", " ");
 }
+
+function getIds($array, $idName)
+{
+    $IdsArray = [];
+    foreach ($array as $item) {
+        if (!in_array($item[$idName], $IdsArray)) {
+            $IdsArray[] = $item[$idName];
+        }
+    }
+    return $IdsArray;
+}

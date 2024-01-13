@@ -188,16 +188,16 @@ class Admin
 
         $this->getView('vehicle');
         $view = new VehicleView();
-        $this->getModel('admin');
+
         $this->getModel('vehicle');
-        $this->getModel('brand');
-        $adminModel = new AdminModel();
         $vehicleModel = new VehicleModel();
+        $this->getModel('brand');
         $brandModel = new BrandModel();
+
         $brands = $brandModel->getAllBrands();
         $vehicles = $vehicleModel->getAllVehicles();
         for ($i = 0; $i < count($vehicles); $i++) {
-            $vehicleInfos = $adminModel->getVehicleInfos($vehicles[$i]['idVehicle']);
+            $vehicleInfos = $vehicleModel->getVehicleInfos($vehicles[$i]['idVehicle']);
             $vehicles[$i]['version'] = $vehicleInfos['version'];
             $vehicles[$i]['modele'] = $vehicleInfos['modele'];
             $vehicles[$i]['marque'] = $vehicleInfos['marque'];
@@ -225,6 +225,7 @@ class Admin
 
     public function add_vehicle()
     {
+        $this->verify_admin_login();
         $this->getModel('vehicle');
         $model = new VehicleModel();
         $model->addVehicle();
@@ -248,6 +249,7 @@ class Admin
 
     public function edit_vehicle($idVehicle)
     {
+        $this->verify_admin_login();
         $this->getModel('vehicle');
         $model = new VehicleModel();
         $model->editVehicle($idVehicle);
@@ -255,6 +257,7 @@ class Admin
     }
     public function delete_vehicle($idVehicle)
     {
+        $this->verify_admin_login();
         $this->getModel('vehicle');
         $model = new VehicleModel();
         $model->deleteVehicle($idVehicle);
@@ -276,6 +279,7 @@ class Admin
 
     public function add_brand()
     {
+        $this->verify_admin_login();
         $this->getModel('brand');
         $model = new BrandModel();
         $model->addBrand();

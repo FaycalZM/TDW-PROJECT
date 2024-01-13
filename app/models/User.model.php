@@ -27,4 +27,9 @@ class UserModel
         $user = $this->first($_POST);
         return $user;
     }
+
+    public function getUserById($idUser)
+    {
+        return $this->first(['idUser' => $idUser]);
+    }
 }

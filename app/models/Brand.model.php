@@ -8,25 +8,30 @@ class BrandModel
 
     public function getAllBrands()
     {
+        $this->table = "marque";
         $this->order_column = 'idMarque';
         return $this->getAll();
     }
     public function getBrand($idMarque)
     {
+        $this->table = "marque";
         return $this->first(['idMarque' => $idMarque]);
     }
     public function addBrand()
     {
+        $this->table = "marque";
         $data = $_POST;
         $this->insert($data);
     }
     public function editBrand($idMarque)
     {
+        $this->table = "marque";
         $data = $_POST;
         $this->update($idMarque, $data, 'idMarque');
     }
     public function deleteBrand($idMarque)
     {
+        $this->table = "marque";
         $this->delete($idMarque, 'idMarque');
     }
 
@@ -87,6 +92,13 @@ class BrandModel
         $this->table = 'avismarque';
         $brandFeedback = $this->where(['idMarque' => $idMarque]);
         return $brandFeedback;
+    }
+
+    public function getAllBrandsFeedback()
+    {
+        $this->table = 'avismarque';
+        $this->order_column = 'is_valid';
+        return $this->getAll();
     }
 
     public function getAllValidBrandFeedback($idMarque)

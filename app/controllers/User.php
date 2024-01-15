@@ -92,10 +92,8 @@ class User
     }
 
     // user profile 
-    public function show_profile()
+    public function show_profile($userId)
     {
-        $userId = $_SESSION['id'];
-
         $this->getView('homepage');
         $this->getModel('home');
         $this->getModel('user');

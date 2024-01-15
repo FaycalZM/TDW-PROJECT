@@ -126,6 +126,40 @@ class AdminModel
         return $infos;
     }
 
+    // ----- Feedback management -----
+    // Vehicles feedback
+    public function validateVehicleFeedback($idAvisVehicle)
+    {
+        $this->table = 'avisvehicle';
+        $this->update($idAvisVehicle, ['is_valid' => 1], 'idAvisVehicle');
+    }
+    public function invalidateVehicleFeedback($idAvisVehicle)
+    {
+        $this->table = 'avisvehicle';
+        $this->update($idAvisVehicle, ['is_valid' => 0], 'idAvisVehicle');
+    }
+    public function deleteVehicleFeedback($idAvisVehicle)
+    {
+        $this->table = 'avisvehicle';
+        $this->delete($idAvisVehicle, 'idAvisVehicle');
+    }
+    // Brands feedback
+    public function validateBrandFeedback($idAvisMarque)
+    {
+        $this->table = 'avismarque';
+        $this->update($idAvisMarque, ['is_valid' => 1], 'idAvisMarque');
+    }
+    public function invalidateBrandFeedback($idAvisMarque)
+    {
+        $this->table = 'avismarque';
+        $this->update($idAvisMarque, ['is_valid' => 0], 'idAvisMarque');
+    }
+    public function deleteBrandFeedback($idAvisMarque)
+    {
+        $this->table = 'avismarque';
+        $this->delete($idAvisMarque, 'idAvisMarque');
+    }
+
     // ----- Settings management -----
     // Contact infos management
     public function getAllContacts()

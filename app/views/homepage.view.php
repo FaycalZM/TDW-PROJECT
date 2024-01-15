@@ -564,7 +564,7 @@ class HomepageView
             <!-- User Infos -->
             <div class="card mb-4">
                 <div class="card-body">
-                    <h3 class="card-title">Your Informations</h3>
+                    <h3 class="card-title">User Informations</h3>
                     <p class="card-text"><strong>full name:</strong> <?= $user['firstName'] ?> <?= $user['lastName'] ?> </p>
                     <p class="card-text"><strong>Email:</strong> <?= $user['email'] ?></p>
                 </div>
@@ -589,7 +589,7 @@ class HomepageView
                                     </div>
                                 <?php }
                             } else { ?>
-                                <h5>You have no favorite vehicles</h5>
+                                <h5>No favorite vehicles</h5>
                             <?php }
                             ?>
                         </div>

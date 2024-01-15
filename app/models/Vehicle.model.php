@@ -115,6 +115,13 @@ class VehicleModel
         return $vehicleFeedback;
     }
 
+    public function getAllVehiclesFeedback()
+    {
+        $this->table = 'avisvehicle';
+        $this->order_column = 'is_valid';
+        return $this->getAll();
+    }
+
     public function feedbackVehicle($idVehicle, $idUser)
     {
         $this->table = 'avisvehicle';

@@ -111,8 +111,6 @@ class Feedback
     }
 
 
-
-
     public function like_brand_comment($idAvisMarque, $idMarque)
     {
         $this->getModel('brand');
@@ -128,4 +126,8 @@ class Feedback
         $vehicleModel->likeVehicleComment($idAvisVehicle);
         redirect("/brands/show_vehicle_details&idMarque=$idVehicle");
     }
+
+    // Admin Feedback management
+
+
 }

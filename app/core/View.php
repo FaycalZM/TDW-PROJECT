@@ -82,7 +82,7 @@ trait View
                 <?php
                 if (isset($_SESSION["id"])) { ?>
             <li><a href="<?= ROOT ?>/user/logout"> Logout </a></li>
-            <li><a href="<?= ROOT ?>/user/show_profile"> Profile </a></li>
+            <li><a href="<?= ROOT ?>/user/show_profile&idUser=<?= $_SESSION["id"] ?>"> Profile </a></li>
         <?php
                 } else { ?>
             <li><a href="<?= ROOT ?>/user/show_login_page/"> Login </a></li>

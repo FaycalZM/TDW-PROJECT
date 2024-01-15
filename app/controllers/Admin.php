@@ -357,8 +357,98 @@ class Admin
     // feedback management actions
     public function show_feedback_management()
     {
-        echo "this is the feedback management page";
+        $this->verify_admin_login();
+
+        $this->getView('feedback');
+        $view = new FeedbackView();
+
+        $this->getModel('vehicle');
+        $vehicleModel = new VehicleModel();
+        $this->getModel('brand');
+        $brandModel = new BrandModel();
+        $this->getModel('user');
+        $userModel = new UserModel();
+
+        $vehiclesFeedback = $vehicleModel->getAllVehiclesFeedback();
+        // get user and vehicle infos for each vehicle feedback
+        for ($i = 0; $i < count($vehiclesFeedback); $i++) {
+            $userId = $vehiclesFeedback[$i]['idUser'];
+            $vehicleId = $vehiclesFeedback[$i]['idVehicle'];
+            $user = $userModel->getUserById($userId);
+            $vehicle = $vehicleModel->getVehicle($vehicleId);
+            $vehiclesFeedback[$i]['user'] = $user;
+            $vehiclesFeedback[$i]['vehicle'] = $vehicle;
+        }
+        $brandsFeedback = $brandModel->getAllBrandsFeedback();
+        // get user and vehicle infos for each brand feedback
+        for ($i = 0; $i < count($brandsFeedback); $i++) {
+            $userId = $brandsFeedback[$i]['idUser'];
+            $brandId = $brandsFeedback[$i]['idMarque'];
+            $user = $userModel->getUserById($userId);
+            $brand = $brandModel->getBrand($brandId);
+            $brandsFeedback[$i]['user'] = $user;
+            $brandsFeedback[$i]['brand'] = $brand;
+        }
+
+        $view->page_head(["vehicles_management.css", "menu.css"], 'Feedback management');
+        $view->show_menu();
+
+        $view->show_vehicles_feedback_management($vehiclesFeedback);
+        $view->show_brands_feedback_management($brandsFeedback);
+
+        $view->page_foot('');
     }
+
+    public function validate_vehicle_feedback($idAvisVehicle)
+    {
+        $this->getModel('admin');
+        $adminModel = new AdminModel();
+        $adminModel->validateVehicleFeedback($idAvisVehicle);
+        redirect("/admin/show_feedback_management");
+    }
+    public function invalidate_vehicle_feedback($idAvisVehicle)
+    {
+        $this->getModel('admin');
+        $adminModel = new AdminModel();
+        $adminModel->invalidateVehicleFeedback($idAvisVehicle);
+        redirect("/admin/show_feedback_management");
+    }
+    public function validate_brand_feedback($idAvisMarque)
+    {
+        $this->getModel('admin');
+        $adminModel = new AdminModel();
+        $adminModel->validateBrandFeedback($idAvisMarque);
+        redirect("/admin/show_feedback_management");
+    }
+    public function invalidate_brand_feedback($idAvisMarque)
+    {
+        $this->getModel('admin');
+        $adminModel = new AdminModel();
+        $adminModel->invalidateBrandFeedback($idAvisMarque);
+        redirect("/admin/show_feedback_management");
+    }
+    public function delete_vehicle_feedback($idAvisVehicle)
+    {
+        $this->getModel('admin');
+        $adminModel = new AdminModel();
+        $adminModel->deleteVehicleFeedback($idAvisVehicle);
+        redirect("/admin/show_feedback_management");
+    }
+
+    public function delete_brand_feedback($idAvisMarque)
+    {
+        $this->getModel('admin');
+        $adminModel = new AdminModel();
+        $adminModel->deleteBrandFeedback($idAvisMarque);
+        redirect("/admin/show_feedback_management");
+    }
+
+
+
+
+
+
+
     // website settings management
     public function show_settings()
     {

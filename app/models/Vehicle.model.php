@@ -57,6 +57,13 @@ class VehicleModel
         return $results;
     }
 
+    public function getVehicleImage($idVehicle)
+    {
+        $this->table = 'imagevehicle';
+        $results = $this->first(['idVehicle' => $idVehicle]);
+        return $results;
+    }
+
     public function getVehicleNote($idVehicle)
     {
         $this->table = "vehicle";

@@ -104,12 +104,19 @@ class Brands
             $user = $userModel->getUserById($vehicleFeedback[$i]['idUser']);
             $vehicleFeedback[$i]['user'] = $user;
         }
+        $isFavorite = false;
+        if (isset($_SESSION['id'])) {
+            $idUser = $_SESSION['id'];
+            // user is logged in -> check if the vehicle is in their favorites list 
+            $isFavorite = $userModel->checkFavoriteExists($idUser, $idVehicle);
+        }
+
         // display
         $view->page_head(["view.css", "brands_page.css", "vehicle_details.css"], "Vehicle Details");
         $view->show_page_header();
         $view->show_menu();
 
-        $view->vehicle_details_page($vehicle, $vehicleImages, $vehicleFeedback);
+        $view->vehicle_details_page($vehicle, $vehicleImages, $vehicleFeedback, $isFavorite);
 
         $view->show_page_footer();
         $view->page_foot("");

@@ -90,6 +90,7 @@ trait Model
         $columns = substr_replace($columns, "", -1);
         $values = substr_replace($values, "", -1);
         $query = "INSERT INTO $this->table ($columns) VALUES($values)";
+        show($query);
         $this->query($query, $data);
         return false;
     }
@@ -112,8 +113,21 @@ trait Model
     public function delete($id, $column_id = 'id')
     {
         $query = "DELETE FROM $this->table WHERE $column_id = :$column_id";
-        show($query);
+
         $data[$column_id] = $id;
+        $this->query($query, $data);
+        return false;
+    }
+
+    public function deleteWhere($data)
+    {
+        $keys = array_keys($data);
+
+        $query = "DELETE FROM $this->table WHERE ";
+        foreach ($keys as $key) {
+            $query .= $key . " = :" . $key . " && ";
+        }
+        $query = substr_replace($query, "", -strlen(" && "));
         $this->query($query, $data);
         return false;
     }

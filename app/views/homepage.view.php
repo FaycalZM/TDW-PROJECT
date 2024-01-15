@@ -308,7 +308,7 @@ class HomepageView
 
 
     // vehicle details page
-    public function vehicle_details_page($vehicle, $images, $feedbacks)
+    public function vehicle_details_page($vehicle, $images, $feedbacks, $isFavorite)
     { ?>
         <div class="container details-container mt-5">
 
@@ -398,9 +398,17 @@ class HomepageView
                     </div>
                 </div>
             </div>
+            <?php
+            if (isset($_SESSION['id'])) { ?>
+                <a href="<?= ROOT ?>/user/<?= $isFavorite ? 'remove_favorite_vehicle' : 'add_favorite_vehicle' ?>&idUser=<?= $_SESSION['id'] ?>&idVehicle=<?= $vehicle['idVehicle'] ?>" class="btn btn-<?= $isFavorite ? 'danger' : 'success' ?>">
+                    <?= $isFavorite ? 'Remove favorite' : 'Add favorite' ?>
+                </a>
+            <?php }
+            ?>
+
 
             <!-- Images Section  -->
-            <h2>Vehicle Images</h2>
+            <h2 class="mt-5">Vehicle Images</h2>
             <div class="images-section">
                 <?php
                 if ($images) {
@@ -471,7 +479,6 @@ class HomepageView
             <?php
             $this->feedback_section($feedbacks, '/feedback/like_vehicle_comment&idAvisVehicle=', 'idAvisVehicle', 'idVehicle');
             ?>
-
         </div>
 
     <?php }
@@ -482,8 +489,7 @@ class HomepageView
         <!-- Feedback (most appreciated feedbacks) -->
         <hr class="mt-4" style="height: 1px; width: 100%;">
         <h2 class="mb-4 ">Users Feedback</h2>
-
-        <!-- Card for User Comment -->
+        <!-- User Comment -->
         <?php
         if ($feedbacks) {
             foreach ($feedbacks as $feedback) { ?>
@@ -551,57 +557,99 @@ class HomepageView
     <?php }
 
     // user profile
-    public function user_profile_page()
+    public function user_profile_page($user)
     { ?>
         <div class="container mt-5">
-            <h2 class="mb-4">User Profile</h2>
-
-            <!-- User Info -->
+            <h1 class="mb-4"><?= $user['firstName'] ?> Profile</h1>
+            <!-- User Infos -->
             <div class="card mb-4">
                 <div class="card-body">
-                    <h5 class="card-title">User Information</h5>
-                    <p class="card-text"><strong>Username:</strong> JohnDoe</p>
-                    <p class="card-text"><strong>Email:</strong> john@example.com</p>
-                    <p class="card-text"><strong>Member Since:</strong> January 1, 2023</p>
+                    <h3 class="card-title">Your Informations</h3>
+                    <p class="card-text"><strong>full name:</strong> <?= $user['firstName'] ?> <?= $user['lastName'] ?> </p>
+                    <p class="card-text"><strong>Email:</strong> <?= $user['email'] ?></p>
                 </div>
             </div>
 
             <!-- Favorite Vehicles -->
             <div class="card mb-4">
                 <div class="card-body">
-                    <h5 class="card-title">Favorite Vehicles</h5>
-                    <!-- Display favorite vehicles, replace with actual vehicle information -->
-                    <ul>
-                        <li>Toyota Camry</li>
-                        <li>Honda Civic</li>
-                        <li>Ford Mustang</li>
-                    </ul>
+                    <h3 class="card-title">Favorite Vehicles</h3>
+                    <div class="container mt-5">
+                        <div class="row">
+                            <?php
+                            if ($user['favorites']) {
+                                foreach ($user['favorites'] as $vehicle) { ?>
+                                    <div class="col-md-4 mb-4" style="display: flex; flex-direction: column; align-items: center;">
+                                        <a href="<?= ROOT ?>/brands/show_vehicle_details&idVehicle=<?= $vehicle['idVehicle'] ?>" class="vehicle-link">
+                                            <img src="<?= ROOTIMG ?><?= $vehicle['image'] ?>" alt="Brand Logo" class="img-fluid">
+                                        </a>
+                                        <h3 class="brand-name text-center mt-3"><?= $vehicle['vehicle']['name'] ?></h3>
+                                        <a href="<?= ROOT ?>/brands/show_vehicle_details&idVehicle=<?= $vehicle['idVehicle'] ?>" class="btn btn-primary mt-2">Show details</a>
+                                        <a href="<?= ROOT ?>/user/remove_favorite_vehicle&idUser=<?= $user['idUser'] ?>&idVehicle=<?= $vehicle['idVehicle'] ?>" class="btn btn-danger mt-2">Remove favorite</a>
+                                    </div>
+                                <?php }
+                            } else { ?>
+                                <h5>You have no favorite vehicles</h5>
+                            <?php }
+                            ?>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- User Ratings -->
+            <!-- User Vehicles Ratings -->
             <div class="card mb-4">
                 <div class="card-body">
-                    <h5 class="card-title">Vehicle Ratings</h5>
-                    <!-- Display vehicle ratings, replace with actual rating information -->
-                    <p><strong>Toyota Camry:</strong> 4.5/5</p>
-                    <p><strong>Honda Civic:</strong> 4.2/5</p>
-                    <p><strong>Ford Mustang:</strong> 4.8/5</p>
+                    <h3 class="card-title">Vehicle Ratings</h3>
+                    <?php
+                    foreach ($user['vehiclesRating'] as $vehicleRating) { ?>
+                        <p><strong><?= $vehicleRating['vehicle']['name'] ?> : </strong> <?= $vehicleRating['note_value'] ?>/5</p>
+                    <?php }
+                    ?>
                 </div>
             </div>
 
-
-            <!-- User Reviews (the pending reviews are not visible to the user) -->
+            <!-- User Brands Ratings -->
             <div class="card mb-4">
                 <div class="card-body">
-                    <h5 class="card-title">Pending Reviews (Administrator View)</h5>
-                    <!-- Display pending reviews, replace with actual review information -->
-                    <p><strong>Username:</strong> JohnDoe</p>
-                    <p><strong>Review:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    <button type="button" class="btn btn-success">Approve Review</button>
+                    <h3 class="card-title">Brand Ratings</h3>
+                    <?php
+                    foreach ($user['brandsRating'] as $brandRating) { ?>
+                        <p><strong><?= $brandRating['brand']['nameMarque'] ?> : </strong> <?= $brandRating['note_value'] ?>/5</p>
+                    <?php }
+                    ?>
                 </div>
             </div>
 
+            <!-- User Vehicles Reviews (the pending reviews are not visible to the user) -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">Vehicles Reviews</h3>
+                    <?php
+                    foreach ($user['vehiclesFeedback'] as $vehicleFeedback) { ?>
+                        <div style="display: flex; justify-content: space-between;">
+                            <p><strong>Review :</strong> "<?= $vehicleFeedback['avis_text'] ?>" </p>
+                            <p><strong>Vehicle :</strong> <?= $vehicleFeedback['vehicle']['name'] ?> </p>
+                        </div>
+                    <?php }
+                    ?>
+                </div>
+            </div>
+
+            <!-- User Brands Reviews (the pending reviews are not visible to the user) -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">Brands Reviews</h3>
+                    <?php
+                    foreach ($user['brandsFeedback'] as $brandFeedback) { ?>
+                        <div style="display: flex; justify-content: space-between;">
+                            <p><strong>Review :</strong> "<?= $brandFeedback['avis_text'] ?>" </p>
+                            <p><strong>Brand :</strong> <?= $brandFeedback['brand']['nameMarque'] ?> </p>
+                        </div>
+                    <?php }
+                    ?>
+                </div>
+            </div>
         </div>
 <?php }
 }

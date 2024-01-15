@@ -498,6 +498,110 @@ class HomepageView
             <?php }
         } else { ?>
             <h5>No available users feedback</h5>
-<?php }
+        <?php }
     }
+
+    // News page
+    public function news_page($allNews = [])
+    { ?>
+        <div class="container mt-5">
+            <h2 class="mb-4">Latest News</h2>
+            <?php
+            foreach ($allNews as $news) { ?>
+                <!-- News Frame -->
+                <div class="card mb-4">
+                    <img src="<?= ROOTIMG ?><?= $news['image'] ?>" class="card-img-top" style="height: 700px;" alt="News Image">
+                    <div class="card-body">
+                        <h5 class="card-title" style="font-size: 1.5rem;"><?= $news['title'] ?></h5>
+                        <p class="card-text" style="font-size: 1.05rem;"><?= $news['content'] ?></p>
+                        <a href="<?= ROOT ?>/news/show_news_details&idNews=<?= $news['idNews'] ?>" class="btn btn-primary">Read More</a>
+                    </div>
+                </div>
+            <?php }
+            ?>
+        </div>
+    <?php }
+
+    public function news_details_page($news)
+    { ?>
+        <!-- News Images Grid -->
+        <div class="container mt-5">
+            <h2 class="mb-4">News Details</h2>
+
+            <!-- News Content -->
+            <div class="card mb-4">
+                <img src="<?= ROOTIMG ?><?= $news['images'][0]['imageURL'] ?>" class="card-img-top" alt="News Main Image">
+                <div class="card-body">
+                    <h5 class="card-title"><?= $news['title'] ?></h5>
+                    <p class="card-text"><?= $news['content'] ?></p>
+                    <a href="<?= $news['newsSource'] ?>" class="btn btn-primary">Read More</a>
+                </div>
+            </div>
+            <div class="row">
+                <?php
+                foreach (array_slice($news['images'], 1, count($news['images']) - 1) as $image) { ?>
+                    <div class="col-md-4 mb-4">
+                        <img src="<?= ROOTIMG ?><?= $image['imageURL'] ?>" class="img-fluid" alt="News Image">
+                    </div>
+                <?php }
+                ?>
+            </div>
+            <a href="<?= ROOT ?>/news/show_news_page" class="btn btn-primary">Back to News</a>
+        </div>
+    <?php }
+
+    // user profile
+    public function user_profile_page()
+    { ?>
+        <div class="container mt-5">
+            <h2 class="mb-4">User Profile</h2>
+
+            <!-- User Info -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">User Information</h5>
+                    <p class="card-text"><strong>Username:</strong> JohnDoe</p>
+                    <p class="card-text"><strong>Email:</strong> john@example.com</p>
+                    <p class="card-text"><strong>Member Since:</strong> January 1, 2023</p>
+                </div>
+            </div>
+
+            <!-- Favorite Vehicles -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Favorite Vehicles</h5>
+                    <!-- Display favorite vehicles, replace with actual vehicle information -->
+                    <ul>
+                        <li>Toyota Camry</li>
+                        <li>Honda Civic</li>
+                        <li>Ford Mustang</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- User Ratings -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Vehicle Ratings</h5>
+                    <!-- Display vehicle ratings, replace with actual rating information -->
+                    <p><strong>Toyota Camry:</strong> 4.5/5</p>
+                    <p><strong>Honda Civic:</strong> 4.2/5</p>
+                    <p><strong>Ford Mustang:</strong> 4.8/5</p>
+                </div>
+            </div>
+
+
+            <!-- User Reviews (the pending reviews are not visible to the user) -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Pending Reviews (Administrator View)</h5>
+                    <!-- Display pending reviews, replace with actual review information -->
+                    <p><strong>Username:</strong> JohnDoe</p>
+                    <p><strong>Review:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <button type="button" class="btn btn-success">Approve Review</button>
+                </div>
+            </div>
+
+        </div>
+<?php }
 }

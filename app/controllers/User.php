@@ -90,4 +90,25 @@ class User
         }
         redirect("");
     }
+
+    // user profile 
+    public function show_profile()
+    {
+        $userId = $_SESSION['id'];
+
+        $this->getView('homepage');
+        $this->getModel('home');
+
+        $view = new HomepageView();
+
+
+        $view->page_head(["view.css", "user_profile.css"], "User profile");
+        $view->show_page_header();
+        $view->show_menu();
+
+        $view->user_profile_page();
+
+        $view->show_page_footer();
+        $view->page_foot("");
+    }
 }

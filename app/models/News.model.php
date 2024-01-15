@@ -13,6 +13,11 @@ class NewsModel
         return $this->getAll();
     }
 
+    public function getNewsById($idNews)
+    {
+        return $this->first(['idNews' => $idNews]);
+    }
+
     public function addNews()
     {
         $data = $_POST;
@@ -47,5 +52,11 @@ class NewsModel
         $this->table = 'imageNews';
         $results = $this->where(['idNews' => $idNews]);
         return $results;
+    }
+
+    public function getNewsImage($idNews)
+    {
+        $images = $this->getNewsImages($idNews);
+        return $images ? $images[0]['imageURL'] : null;
     }
 }

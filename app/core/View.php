@@ -2,6 +2,7 @@
 
 trait View
 {
+
     public function page_head($css_files, $page_title)
     { ?>
         <!doctype html>

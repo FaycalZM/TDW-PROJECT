@@ -75,6 +75,7 @@ class UserModel
         return $this->where(['idUser' => $idUser, 'is_valid' => 1]);
     }
 
+    // users favorites management
     public function checkFavoriteExists($idUser, $idVehicle)
     {
         $this->table = 'favorites';

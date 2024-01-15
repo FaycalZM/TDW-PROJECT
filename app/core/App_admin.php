@@ -8,7 +8,7 @@ class App_admin
 
     public function splitURL()
     {
-        $URL = $_GET['url'] ?? 'Login_admin/show_login_admin';
+        $URL = $_GET['url'] ?? 'login_admin/show_login_admin';
         $URL = explode('/', trim($URL));
         return $URL;
     }

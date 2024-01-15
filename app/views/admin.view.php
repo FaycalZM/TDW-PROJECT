@@ -70,29 +70,25 @@ class Admin_page_view
             <input name="filter_sort" type="submit" value="Sort & Filter" class="btn btn-primary">
         </form>
 
-        <ol class="list-group list-group-numbered px-4 my-5"><?php
-                                                                foreach ($users as $user) { ?>
+        <ol class="list-group list-group-numbered px-4 my-5">
+            <?php
+            foreach ($users as $user) { ?>
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                     <div class="ms-2 me-auto">
-                        <div class="fw-bold"><?php echo $user["firstName"] . " " . $user["lastName"] ?></div>
-                        <?php echo $user["email"] ?>
+                        <div class="fw-bold"><?= $user["firstName"] . " " . $user["lastName"] ?></div>
+                        <?= $user["email"] ?>
                     </div>
-                    <span>
-                        <a target="_blank" href="<?= ROOT ?>/admin/show_user_profile&id_user=<?php echo $user["idUser"] ?>" class="btn btn-primary me-2 mt-1"> show profile </a>
-                        <?php
-                                                                    if ($user["is_valid"]) {
-                        ?>
-                            <a href="<?= ROOT ?>/admin/invalidate_user&idUser=<?php echo $user["idUser"] ?>" class="btn btn-warning me-2 mt-1"> block </a><?php
-                                                                                                                                                        } else { ?>
-                            <a href="<?= ROOT ?>/admin/validate_user&idUser=<?php echo $user["idUser"] ?>" class="btn btn-success me-2 mt-1"> Validate </a><?php
-                                                                                                                                                        }
-                                                                                                                                                            ?>
-                        <a href="<?= ROOT ?>/admin/delete_user&idUser=<?php echo $user["idUser"] ?>" class="btn btn-danger me-2 mt-1 sup"> Delete </a>
-                    </span>
+                    <div>
+                        <a target="_blank" href="<?= ROOT ?>/user/show_profile&idUser=<?= $user["idUser"] ?>" class="btn btn-primary me-2 mt-1"> show profile </a>
+                        <?php if ($user["is_valid"]) { ?>
+                            <a href="<?= ROOT ?>/admin/invalidate_user&idUser=<?= $user["idUser"] ?>" class="btn btn-warning me-2 mt-1"> block </a>
+                        <?php } else { ?>
+                            <a href="<?= ROOT ?>/admin/validate_user&idUser=<?= $user["idUser"] ?>" class="btn btn-success me-2 mt-1"> Validate </a>
+                        <?php } ?>
+                        <a href="<?= ROOT ?>/admin/delete_user&idUser=<?= $user["idUser"] ?>" class="btn btn-danger me-2 mt-1 sup"> Delete </a>
+                    </div>
                 </li>
-            <?php
-                                                                }
-            ?>
+            <?php } ?>
         </ol>
 <?php
     }

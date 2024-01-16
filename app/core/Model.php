@@ -7,7 +7,7 @@ trait Model
     protected $limit = 100;
     protected $offset = 0;
     protected $order_type = "ASC";
-    protected $order_column = "id";
+    protected $order_column = "";
 
 
     public function setOrderColumn($order_column)
@@ -90,7 +90,6 @@ trait Model
         $columns = substr_replace($columns, "", -1);
         $values = substr_replace($values, "", -1);
         $query = "INSERT INTO $this->table ($columns) VALUES($values)";
-        show($query);
         $this->query($query, $data);
         return false;
     }
@@ -110,6 +109,29 @@ trait Model
         $this->query($query, $data);
         return false;
     }
+
+    public function updateWhere($whereData, $newValues)
+    {
+        $keys = array_keys($newValues);
+        $whereKeys = array_keys($whereData);
+        $query = "UPDATE $this->table SET ";
+
+        foreach ($keys as $key) {
+            $query .= "$key = :$key,";
+        }
+        $query = substr_replace($query, "", -1);
+        $query .= " WHERE ";
+        foreach ($whereKeys as $whereKey) {
+            $query .= $whereKey . " = :" . $whereKey . " && ";
+        }
+        $query = substr_replace($query, "", -strlen(" && "));
+
+        $data = array_merge($newValues, $whereData);
+
+        $this->query($query, $data);
+        return false;
+    }
+
     public function delete($id, $column_id = 'id')
     {
         $query = "DELETE FROM $this->table WHERE $column_id = :$column_id";

@@ -42,6 +42,8 @@ class HomepageView
         </div>
     <?php }
 
+
+
     public function show_feedback_brands_logos($brands)
     { ?>
         <div class="container mt-5">

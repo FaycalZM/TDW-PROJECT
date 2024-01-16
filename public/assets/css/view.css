@@ -98,6 +98,7 @@ header {
     animation-name: diapo;
     animation-duration: 15s;
     animation-iteration-count: infinite;
+    animation-fill-mode: forwards;
 }
 
 .slide {
@@ -141,20 +142,8 @@ header {
         transform: translateX(0%);
     }
 
-    20% {
-        transform: translateX(-20%);
-    }
-
-    40% {
+    50% {
         transform: translateX(-40%);
-    }
-
-    60% {
-        transform: translateX(-60%);
-    }
-
-    80% {
-        transform: translateX(-80%);
     }
 
     100% {

@@ -74,7 +74,7 @@ trait View
         <ul class="nav-menu">
             <li><a href="<?= ROOT ?>"> Homepage </a></li>
             <li><a href="<?= ROOT ?>/news/show_news_page"> News </a></li>
-            <li><a href="<?= ROOT ?>/comparator/show_camparator_page"> Comparator</a></li>
+            <li><a href="<?= ROOT ?>/comparator/show_comparator_page"> Comparator</a></li>
             <li><a href="<?= ROOT ?>/brands/show_brands_page"> Brands</a></li>
             <li><a href="<?= ROOT ?>/feedback/show_feedback_page"> Feedback</a></li>
             <li><a href="<?= ROOT ?>/guides/show_guides_page"> Guides</a></li>

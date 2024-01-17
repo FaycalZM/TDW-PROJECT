@@ -62,6 +62,6 @@ class Home
 
 
         $view->show_page_footer();
-        $view->page_foot("view.js");
+        $view->page_foot("comparator.js");
     }
 }

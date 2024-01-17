@@ -39,7 +39,6 @@ $(document).ready(function () {
         handleDropdownChange($('#model' + groupId), $('#version' + groupId), 'comparator/get_model_versions&idModele=', 'idVersion', 'valueVersion');
         handleDropdownChange($('#version' + groupId), $('#vehicle' + groupId), 'comparator/get_version_vehicles&idVersion=', 'idVehicle', 'name');
     });
-
 });
 
 

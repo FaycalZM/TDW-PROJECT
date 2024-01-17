@@ -19,7 +19,6 @@ class ComparatorView
                                 <div class="form-group">
                                     <label for="brand<?= $i ?>">Brand:</label>
                                     <select class="form-control form-select brand-select" id="brand<?= $i ?>" name="brand<?= $i ?>">
-                                        <option value="">select</option>
                                         <?php
                                         foreach ($brands as $brand) { ?>
                                             <option value="<?= $brand['idMarque'] ?>"><?= $brand['nameMarque'] ?></option>
@@ -114,7 +113,7 @@ class ComparatorView
             <?php
             foreach ($data as $comparison) { ?>
                 <div class="row">
-                    <p><strong>Popularity: <?= $comparison['popularity'] ?></strong> </p>
+                    <p class="mt-4"><strong>Popularity: <?= $comparison['popularity'] ?></strong> </p>
                     <div class="col-md-6">
                         <div class="card comparison-card">
                             <img src="<?= ROOTIMG ?><?= $comparison['vehicle1']['image'] ?>" class="card-img-top" alt="Vehicle 1">
